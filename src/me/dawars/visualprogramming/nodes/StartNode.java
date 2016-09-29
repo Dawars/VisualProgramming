@@ -6,9 +6,9 @@ import me.dawars.visualprogramming.nodes.pins.OutExecutionPin;
 /**
  * Created by dawars on 26/09/16.
  */
-public class StartNode implements IExecutableNode {
+public class StartNode implements INode {
 
-    public OutExecutionPin outPin = new OutExecutionPin();
+    public OutExecutionPin outExecutionPin = new OutExecutionPin();
 
     @Override
     public void execute() {
@@ -16,7 +16,7 @@ public class StartNode implements IExecutableNode {
     }
 
     @Override
-    public IExecutableNode getNextNode() {
-        return outPin.getConnectedNode();
+    public INode getNextNode() {
+        return outExecutionPin.getConnectedNode();
     }
 }

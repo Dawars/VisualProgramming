@@ -1,14 +1,17 @@
 package me.dawars.visualprogramming.nodes;
 
+import me.dawars.visualprogramming.INode;
 import me.dawars.visualprogramming.nodes.pins.InputPin;
+import me.dawars.visualprogramming.nodes.pins.OutExecutionPin;
 
 /**
  * Created by dawars on 27/09/16.
  */
-public class PrintNode implements IExecutableNode{
+public class PrintNode<T> implements INode {
 
     private String value;
-    public InputPin<String> inString = new InputPin<>();
+    public InputPin<T> inPin = new InputPin<>();
+    public OutExecutionPin outExecutionPin = new OutExecutionPin();
 
     public PrintNode(){}
 
@@ -19,11 +22,11 @@ public class PrintNode implements IExecutableNode{
 
     @Override
     public void execute() {
-        System.out.println(inString.getValue());
+        System.out.println(inPin.getValue().toString());
     }
 
     @Override
-    public IExecutableNode getNextNode() {
-        return null;
+    public INode getNextNode() {
+        return outExecutionPin.getConnectedNode();
     }
 }

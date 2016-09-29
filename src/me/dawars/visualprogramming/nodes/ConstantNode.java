@@ -13,4 +13,14 @@ public class ConstantNode<T> implements INode {
     public ConstantNode(T val) {
         out.setValue(val);
     }
+
+    @Override
+    public void execute() {
+
+    }
+
+    @Override
+    public INode getNextNode() {
+        return null;
+    }
 }

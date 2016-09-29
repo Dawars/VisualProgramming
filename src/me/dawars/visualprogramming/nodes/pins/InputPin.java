@@ -20,12 +20,15 @@ public class InputPin<T /*extends DataTypes*/>  implements IPin{
      * @return true if successfully connected, false otherwise
      */
     public boolean connectTo(OutputPin<T> pin) {
-        if (type.equals(pin.type)) {
-            outPin = pin;
+        outPin = pin;
+        return true;
+
+        /*if (type.equals(pin.type)) {
+            outExecutionPin = pin;
             return true;
         } else {
             return false;
-        }
+        }*/
     }
 
     /**
