@@ -5,5 +5,4 @@ package me.dawars.visualprogramming;
  */
 public interface INode {
 
-    public void execute();
 }
