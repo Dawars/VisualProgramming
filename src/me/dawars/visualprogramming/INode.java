@@ -5,10 +5,4 @@ package me.dawars.visualprogramming;
  */
 public interface INode {
 
-    /**
-     * Read inputs, execute the nodes logic and write the results to the output nodes
-     */
-    void execute();
-
-    INode getNextNode();
 }

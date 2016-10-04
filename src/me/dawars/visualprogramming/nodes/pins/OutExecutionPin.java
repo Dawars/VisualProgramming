@@ -1,19 +1,19 @@
 package me.dawars.visualprogramming.nodes.pins;
 
-import me.dawars.visualprogramming.INode;
+import me.dawars.visualprogramming.nodes.ExecutableNode;
 
 /**
  * Created by dawars on 27/09/16.
  */
 public class OutExecutionPin implements IPin {
 
-    private INode connectedNode;
+    private ExecutableNode connectedNode;
 
-    public void connectTo(INode node) {
+    public void connectTo(ExecutableNode node) {
         connectedNode = node;
     }
 
-    public INode getConnectedNode() {
+    public ExecutableNode getConnectedNode() {
         return connectedNode;
     }
 }

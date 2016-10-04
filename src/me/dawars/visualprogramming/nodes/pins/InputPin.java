@@ -1,17 +1,15 @@
 package me.dawars.visualprogramming.nodes.pins;
 
-import me.dawars.visualprogramming.nodes.DataTypes;
-
 /**
  * Created by dawars on 26/09/16.
  */
-public class InputPin<T /*extends DataTypes*/>  implements IPin{
+public class InputPin<T /*extends DataTypes*/> implements IPin {
 
-    private DataTypes type;
+    //    private DataTypes type = T;
     private OutputPin<T> outPin;
 
     // used when no OutputNode is connected to this node
-    private T defaultData;
+    private T value;
 
     /**
      * Connect this
@@ -23,7 +21,7 @@ public class InputPin<T /*extends DataTypes*/>  implements IPin{
         outPin = pin;
         return true;
 
-        /*if (type.equals(pin.type)) {
+        /*if (type.equals(pin.type)) {  // TODO: where to check? "Controller"
             outExecutionPin = pin;
             return true;
         } else {
@@ -33,13 +31,15 @@ public class InputPin<T /*extends DataTypes*/>  implements IPin{
 
     /**
      * Set default data
+     *
      * @param data data to setValue
      */
-    public void setDefaultData(T data){
-        this.defaultData = data;
+    public void setValue(T data) {
+        this.value = data;
     }
 
     public T getValue() {
-        return outPin == null ? defaultData : outPin.getValue();
+        // behaves weird
+        return outPin == null ? value : outPin.getValue();
     }
 }
