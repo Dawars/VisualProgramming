@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Created by dawars on 11/8/16.
  */
-public class PinView implements View {
+public class OutPinView implements View {
     @Override
     public void render(Graphics graphics) {
 //        graphics.drawOval(x, y, r, r...);

@@ -12,4 +12,5 @@ import java.awt.*;
  */
 public interface View {
     void render(Graphics graphics);
+
 }

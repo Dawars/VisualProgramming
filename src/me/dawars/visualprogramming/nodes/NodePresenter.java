@@ -3,11 +3,12 @@ package me.dawars.visualprogramming.nodes;
 /**
  * Created by dawars on 11/8/16.
  */
-public class NodePresenter {
+public abstract class NodePresenter<T> {
 
-    private NodeModel model;
+//    private NodeModel<T> model;
     private NodeView view;
 
+    abstract void execute();
 
     public void onClick(){
 
