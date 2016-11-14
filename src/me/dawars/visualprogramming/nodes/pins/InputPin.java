@@ -1,45 +1,37 @@
 package me.dawars.visualprogramming.nodes.pins;
 
+import me.dawars.visualprogramming.nodes.Connection;
+import me.dawars.visualprogramming.nodes.INode;
+
 /**
  * Created by dawars on 26/09/16.
  */
-public class InputPin<T /*extends DataTypes*/> implements IPin {
+public class InputPin<T> implements IPin {
 
-    //    private DataTypes type = T;
-    private OutputPin<T> outPin;
+    private final INode node;
+    public Connection<T> connection;
 
-    // used when no OutputNode is connected to this node
-    private T value;
+    private T defaultValue;
 
-    /**
-     * Connect this
-     *
-     * @param pin
-     * @return true if successfully connected, false otherwise
-     */
-    public boolean connectTo(OutputPin<T> pin) {
-        outPin = pin;
-        return true;
-
-        /*if (type.equals(pin.type)) {  // TODO: where to check? "Controller"
-            outExecutionPin = pin;
-            return true;
-        } else {
-            return false;
-        }*/
+    public InputPin(INode node) {
+        this.node = node;
     }
 
     /**
      * Set default data
      *
-     * @param data data to setValue
+     * @param data data to setDefaultValue
      */
-    public void setValue(T data) {
-        this.value = data;
+    public void setDefaultValue(T data) {
+        this.defaultValue = data;
+    }
+
+    public T getDefaultValue() {
+        return defaultValue;
     }
 
     public T getValue() {
-        // behaves weird
-        return outPin == null ? value : outPin.getValue();
+
+        return connection == null ? defaultValue : connection.outPin.getValue();
     }
 }

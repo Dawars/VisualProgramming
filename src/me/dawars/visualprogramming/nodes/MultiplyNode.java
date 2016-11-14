@@ -4,16 +4,18 @@ import me.dawars.visualprogramming.nodes.pins.InputPin;
 import me.dawars.visualprogramming.nodes.pins.OutputPin;
 
 /**
- * Created by dawars on 26/09/16.
+ * Created by dawars on 11/14/16.
  */
-public class AddNode implements INode {
+public class MultiplyNode implements INode {
     public InputPin<Double> inA = new InputPin<>(this);
     public InputPin<Double> inB = new InputPin<>(this);
-    public OutputPin<Double> outC = new OutputPin<>(this);
+    public OutputPin<Double> out = new OutputPin<>(this);
 
     @Override
     public void execute() {
-        System.out.println("[AddNode]");
-        outC.setValue(inA.getValue() + inB.getValue());
+        System.out.print("[MultiplyNode]");
+        out.setValue(inA.getValue() * inB.getValue());
+
+        System.out.println(out.getValue());
     }
 }
