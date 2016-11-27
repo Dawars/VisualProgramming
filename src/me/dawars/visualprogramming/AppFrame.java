@@ -82,18 +82,17 @@ public class AppFrame extends JFrame {
             System.exit(0);
         });
 
-
         JMenuItem sMenuItem = new JMenuItem("Save");
         sMenuItem.setMnemonic(KeyEvent.VK_S);
         sMenuItem.setToolTipText("Save current project");
         sMenuItem.addActionListener((ActionEvent event) -> {
-            app.save();
+            app.save(false);
         });
         JMenuItem saMenuItem = new JMenuItem("Save as...");
         saMenuItem.setMnemonic(KeyEvent.VK_A);
         saMenuItem.setToolTipText("Save current project as ...");
         saMenuItem.addActionListener((ActionEvent event) -> {
-            app.save_as();
+            app.save(true);
         });
         JMenuItem oMenuItem = new JMenuItem("Open");
         oMenuItem.setMnemonic(KeyEvent.VK_O);

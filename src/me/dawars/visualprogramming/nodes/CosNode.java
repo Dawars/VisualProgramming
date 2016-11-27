@@ -8,8 +8,13 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
  */
 public class CosNode extends NodePresenter {
 
-    public InputPin<Double> in = new InputPin<>(this);
-    public OutputPin<Double> out = new OutputPin<>(this);
+    private InputPin<Double> in = new InputPin<>(this, "in");
+    private OutputPin<Double> out = new OutputPin<>(this, "out");
+
+    public CosNode(){
+        addInPin(in);
+        addOutPin(out);
+    }
 
     @Override
     public void execute() {
@@ -21,5 +26,13 @@ public class CosNode extends NodePresenter {
     @Override
     public String getName() {
         return "Cos Node";
+    }
+
+    public InputPin<Double> getIn() {
+        return in;
+    }
+
+    public OutputPin<Double> getOut() {
+        return out;
     }
 }

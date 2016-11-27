@@ -14,16 +14,17 @@ import java.util.List;
  */
 public class CanvasPresenter implements MouseListener, MouseInputListener, Serializable {
     private final StartNode start;
-    public final JCanvas view;
+    public final CanvasView view;
     private CanvasModel model;
 
     public CanvasPresenter() {
 
-        view = new JCanvas(CanvasPresenter.this);
+        view = new CanvasView(CanvasPresenter.this);
         model = new CanvasModel();
 
         // Start
         start = new StartNode();
+        start.setPosition(400, 100);
         addNode(start);
 
 /*        TimeNode time = new TimeNode();
@@ -65,6 +66,10 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         return model.getNodes();
     }
 
+    public List<Connection> getConnections() {
+        return model.getConnections();
+    }
+
     /**
      * Connect to {@link INode}s through their {@link me.dawars.visualprogramming.nodes.pins.IPin}s
      *
@@ -94,7 +99,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
             node.execute();
         }
 
-        System.out.println("The result: " + start.getInput().getValue());
+//        System.out.println("The result: " + start.getInput().getValue());
     }
 
     @Override

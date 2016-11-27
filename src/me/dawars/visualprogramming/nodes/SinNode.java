@@ -8,8 +8,13 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
  */
 public class SinNode extends NodePresenter  {
 
-    public InputPin<Double> in = new InputPin<>(this);
-    public OutputPin<Double> out = new OutputPin<>(this);
+    private InputPin<Double> in = new InputPin<>(this, "in");
+    private OutputPin<Double> out = new OutputPin<>(this, "out");
+
+    public SinNode(){
+        addInPin(in);
+        addOutPin(out);
+    }
 
     @Override
     public void execute() {
@@ -20,5 +25,13 @@ public class SinNode extends NodePresenter  {
     @Override
     public String getName() {
         return "Sin Node";
+    }
+
+    public InputPin<Double> getIn() {
+        return in;
+    }
+
+    public OutputPin<Double> getOut() {
+        return out;
     }
 }

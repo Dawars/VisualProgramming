@@ -9,12 +9,20 @@ import me.dawars.visualprogramming.nodes.INode;
 public class InputPin<T> implements IPin {
 
     private final INode node;
+    private final InPinView view;
     public Connection<T> connection;
+    private final String name;
 
     private T defaultValue;
 
-    public InputPin(INode node) {
+    public InputPin(INode node, String name) {
+        view = new InPinView(this);
         this.node = node;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**
@@ -33,5 +41,9 @@ public class InputPin<T> implements IPin {
     public T getValue() {
 
         return connection == null ? defaultValue : connection.outPin.getValue();
+    }
+
+    public InPinView getView() {
+        return view;
     }
 }

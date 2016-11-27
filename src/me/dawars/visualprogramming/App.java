@@ -73,11 +73,11 @@ public class App {
     /**
      * Save current project
      */
-    public void save() {
+    public void save(boolean saveAs) {
         writeToConsole("Saving project...");
 
 
-        if (fileToSave != null) {
+        if (fileToSave != null && !saveAs) {
             saveToFile(fileToSave, canvas);
         } else {
             FileDialog fd = new FileDialog(view, "Choose a path to save", FileDialog.SAVE);
@@ -165,6 +165,7 @@ public class App {
         fileToSave = null;
     }
 
-    public void save_as() {
+    public void start(){
+        canvas.run();
     }
 }

@@ -7,9 +7,15 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
  * Created by dawars on 11/14/16.
  */
 public class MultiplyNode extends NodePresenter {
-    public InputPin<Double> inA = new InputPin<>(this);
-    public InputPin<Double> inB = new InputPin<>(this);
-    public OutputPin<Double> out = new OutputPin<>(this);
+    private InputPin<Double> inA = new InputPin<>(this, "a");
+    private InputPin<Double> inB = new InputPin<>(this, "b");
+    private OutputPin<Double> out = new OutputPin<>(this, "out");
+
+    public MultiplyNode(){
+        addInPin(inA);
+        addInPin(inB);
+        addOutPin(out);
+    }
 
     @Override
     public void execute() {
@@ -23,5 +29,17 @@ public class MultiplyNode extends NodePresenter {
     @Override
     public String getName() {
         return "Multiply Node";
+    }
+
+    public InputPin<Double> getInA() {
+        return inA;
+    }
+
+    public InputPin<Double> getInB() {
+        return inB;
+    }
+
+    public OutputPin<Double> getOut() {
+        return out;
     }
 }
