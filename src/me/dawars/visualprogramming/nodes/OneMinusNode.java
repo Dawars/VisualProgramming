@@ -6,7 +6,7 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
 /**
  * Created by dawars on 11/14/16.
  */
-public class OneMinusNode implements INode {
+public class OneMinusNode extends NodePresenter  {
 
     public InputPin<Double> in = new InputPin<>(this);
     public OutputPin<Double> out = new OutputPin<>(this);
@@ -15,5 +15,11 @@ public class OneMinusNode implements INode {
     public void execute() {
         System.out.println("[OneMinusNode]");
         out.setValue(1 - in.getValue());
+    }
+
+
+    @Override
+    public String getName() {
+        return "One Minus Node";
     }
 }

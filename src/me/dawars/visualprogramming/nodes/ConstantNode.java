@@ -5,9 +5,9 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
 /**
  * Created by dawars on 26/09/16.
  */
-public class ConstantNode implements INode {
+public class ConstantNode extends NodePresenter  {
 
-    public OutputPin<Double> out = new OutputPin<>(this);
+    private OutputPin<Double> out = new OutputPin<>(this);
 
     @Override
     public void execute() {
@@ -17,5 +17,14 @@ public class ConstantNode implements INode {
 
     public void setValue(Double value) {
         out.setValue(value);
+    }
+
+    public OutputPin getOutput() {
+        return out;
+    }
+
+    @Override
+    public String getName() {
+        return "Constant Node";
     }
 }

@@ -5,7 +5,7 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
 /**
  * Created by dawars on 11/14/16.
  */
-public class TimeNode implements INode {
+public class TimeNode extends NodePresenter {
 
     public OutputPin<Double> out = new OutputPin<>(this);
 
@@ -14,5 +14,10 @@ public class TimeNode implements INode {
         System.out.print("[TimeNode]");
         out.setValue((double) System.currentTimeMillis());
         System.out.println(out.getValue());
+    }
+
+    @Override
+    public String getName() {
+        return "Time Node";
     }
 }
