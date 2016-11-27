@@ -2,6 +2,7 @@ package me.dawars.visualprogramming.canvas;
 
 import me.dawars.visualprogramming.nodes.Connection;
 import me.dawars.visualprogramming.nodes.NodePresenter;
+import me.dawars.visualprogramming.nodes.pins.IPin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,15 +30,19 @@ public class CanvasView extends JComponent {
         System.out.println("painting CanvasView");
 
         for (NodePresenter node : presenter.getNodes()) {
-            if (graphics instanceof Graphics2D) {
-                node.render((Graphics2D) graphics);
-            }
+            node.render((Graphics2D) graphics);
         }
 
+        graphics.setColor(Color.BLACK);
+
         for (Connection connection : presenter.getConnections()) {
-            if (graphics instanceof Graphics2D) {
-                connection.render((Graphics2D) graphics);
-            }
+            connection.render((Graphics2D) graphics);
+        }
+
+        if (presenter.getMouseState() == CanvasPresenter.MouseState.CONNECTING) {
+            Point mouse = presenter.getMousePt();
+            IPin pin = presenter.getSelectedPin();
+            graphics.drawLine(mouse.x, mouse.y, pin.getX(), pin.getY());
         }
     }
 

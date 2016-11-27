@@ -5,6 +5,7 @@ import me.dawars.visualprogramming.canvas.CanvasPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
@@ -13,6 +14,7 @@ import java.awt.event.KeyEvent;
 public class AppFrame extends JFrame {
 
     private final App app;
+    private final JList nodeList;
     private CanvasPresenter canvas;
 
     private final JTextArea console;
@@ -38,11 +40,25 @@ public class AppFrame extends JFrame {
 
         JPanel toolBar = new JPanel();
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-        toolBar.add(new JButton("Start"));
+        JButton addButton = new JButton("Add");
+        addButton.setActionCommand("ADD");
+        addButton.addActionListener(app);
+        toolBar.add(addButton);
+
+        JButton deleteButton= new JButton("Delete");
+        deleteButton.setActionCommand("DELETE");
+        deleteButton.addActionListener(app);
+        toolBar.add(deleteButton);
+
+        JButton start = new JButton("Start");
+        start.setActionCommand("START");
+        start.addActionListener(app);
+        toolBar.add(start);
+
         toolBar.add(new JButton("Stop"));
         add(toolBar, BorderLayout.NORTH);
 
-        JList<String> nodeList = new JList<>(new AbstractListModel<String>() {
+        nodeList = new JList<>(new AbstractListModel<String>() {
             @Override
             public int getSize() {
                 return App.getListNode().size();
@@ -70,7 +86,6 @@ public class AppFrame extends JFrame {
     private void createMenuBar() {
 
         JMenuBar menubar = new JMenuBar();
-//        ImageIcon icon = new ImageIcon("exit.png");
 
         JMenu file = new JMenu("File");
         file.setMnemonic(KeyEvent.VK_F);
@@ -121,6 +136,7 @@ public class AppFrame extends JFrame {
 
     public void setLeftBottomComponent(JComponent component) {
         left_sidebar.setBottomComponent(component);
+        // TODO colored pane
     }
 
     public JTextArea getConsole() {
@@ -130,5 +146,9 @@ public class AppFrame extends JFrame {
     public void setCanvas(CanvasPresenter canvas) {
         this.canvas = canvas;
         right_side.setTopComponent(canvas.view);
+    }
+
+    public JList getNodeList() {
+        return nodeList;
     }
 }

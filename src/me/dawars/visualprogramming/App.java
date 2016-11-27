@@ -5,17 +5,20 @@ import me.dawars.visualprogramming.nodes.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
 /**
  * Created by dawars on 26/09/16.
  */
-public class App {
+public class App implements ActionListener {
 
     private AppFrame view;
     private static ArrayList<NodePresenter> listNode = new ArrayList<>();
     private CanvasPresenter canvas;
+    private String nodeToAdd;
 
     public static void main(String[] args) {
         System.out.println("---Dawars Visual Programming---");
@@ -39,7 +42,7 @@ public class App {
 
     public App() {
         registerNodes();
-        canvas = new CanvasPresenter();
+        canvas = new CanvasPresenter(this);
 
         view = new AppFrame(this, canvas);
     }
@@ -158,14 +161,44 @@ public class App {
     }
 
     public void newProject() {
-        this.canvas = new CanvasPresenter();
+        this.canvas = new CanvasPresenter(this);
         view.setCanvas(canvas);
         writeToConsole("New project created");
 
         fileToSave = null;
     }
 
-    public void start(){
+    public void start() {
         canvas.run();
+    }
+
+    private NodePresenter getNodeToAdd() {
+        int selectedIndex = view.getNodeList().getSelectedIndex();
+
+        return selectedIndex == -1 ? null : listNode.get(selectedIndex);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        switch (actionEvent.getActionCommand()) {
+            case "ADD":
+                NodePresenter nodeToAdd = getNodeToAdd();
+                if (nodeToAdd != null) {
+                    writeToConsole("Adding " + nodeToAdd.getName());
+                    canvas.addNodeInstance(nodeToAdd);
+                }
+
+                break;
+            case "DELETE":
+                NodePresenter node = canvas.getSelectedNode();
+                if (node != null) {
+                    writeToConsole("Removing node " + node.getName());
+                    canvas.removeNode(node);
+                }
+                break;
+            case "START":
+                start();
+                break;
+        }
     }
 }

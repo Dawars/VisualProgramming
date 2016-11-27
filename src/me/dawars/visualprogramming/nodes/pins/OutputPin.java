@@ -2,23 +2,27 @@ package me.dawars.visualprogramming.nodes.pins;
 
 import me.dawars.visualprogramming.nodes.Connection;
 import me.dawars.visualprogramming.nodes.INode;
+import me.dawars.visualprogramming.nodes.NodePresenter;
+import me.dawars.visualprogramming.nodes.view.NodeView;
 
+import javax.xml.soap.Node;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by dawars on 26/09/16.
  */
 public class OutputPin<T> implements IPin {
-    private final OutPinView view;
     private T value;
-    private INode node;
+    private NodePresenter node;
 
-    public ArrayList<Connection<T>> connections = new ArrayList<>();
+    public List<Connection<T>> connections = Collections.synchronizedList(new ArrayList<>());
     private String name;
+    private int x;
+    private int y;
 
-    public OutputPin(INode node, String name) {
-        view = new OutPinView(this);
-
+    public OutputPin(NodePresenter node, String name) {
         this.node = node;
         this.name = name;
     }
@@ -40,8 +44,9 @@ public class OutputPin<T> implements IPin {
     }
 
     private void breakConnection(InputPin<T> in) {
-        if (in.connection != null)
+        if (in.connection != null) {
             in.connection.outPin.connections.remove(in.connection); // remove other half of connection
+        }
         this.connections.remove(in.connection); // remove if already connected
     }
 
@@ -49,7 +54,37 @@ public class OutputPin<T> implements IPin {
         return name;
     }
 
-    public OutPinView getView() {
-        return view;
+    @Override
+    public void clicked() {
+        System.out.println(getName() + " pin clicked");
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public boolean isInput() {
+        return false;
+    }
+
+    public void calcPosition(int i) {
+        setPosition(x + NodeView.WIDTH - NodeView.PADDING - NodeView.PIN_WIDTH,
+                y + (NodeView.PIN_HEIGHT + NodeView.PADDING) * (i + 1) + NodeView.HEADER);
+    }
+
+    public NodePresenter getNode() {
+        return node;
     }
 }
