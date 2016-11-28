@@ -1,6 +1,6 @@
 package me.dawars.visualprogramming.canvas;
 
-import me.dawars.visualprogramming.App;
+import me.dawars.visualprogramming.ColorPresenter;
 import me.dawars.visualprogramming.TopologicalSort;
 import me.dawars.visualprogramming.nodes.*;
 import me.dawars.visualprogramming.nodes.pins.IPin;
@@ -25,6 +25,11 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
     private CanvasModel model;
     private NodePresenter selectedNode;
     private IPin selectedPin;
+    private ColorPresenter colorComponent;
+
+    public void setColorComponent(ColorPresenter colorComponent) {
+        this.colorComponent = colorComponent;
+    }
 
     public enum MouseState {NONE, MOVING, CONNECTING}
 
@@ -38,6 +43,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         start = new StartNode();
         start.setPosition(400, 100);
         addNode(start);
+
     }
 
     public void addNode(NodePresenter node, int x, int y) {
@@ -61,11 +67,13 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
             newNode = new AddNode();
         } else if (node instanceof ConstantNode) {
             newNode = new ConstantNode();
-            ((ConstantNode) newNode).getOut().setValue(0.0);
+            ((ConstantNode) newNode).getOut().setValue(0.5);
         } else if (node instanceof CosNode) {
             newNode = new CosNode();
         } else if (node instanceof LerpNode) {
             newNode = new LerpNode();
+        } else if (node instanceof AbsNode) {
+            newNode = new AbsNode();
         } else if (node instanceof MultiplyNode) {
             newNode = new MultiplyNode();
         } else if (node instanceof OneMinusNode) {
@@ -111,7 +119,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
             out.connect(connection);////////////////////////////
 
             model.addConnection(connection);
-            calcTopoSort(); // update topo sort FIXME should check cycles beforehand
+            calcTopoSort();
         }
         return cycle;
     }
@@ -120,13 +128,13 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     public void run() {
         calcTopoSort();
-        thread = new CanvasThread(topoSort);
+        stop();
+        thread = new CanvasThread(topoSort, colorComponent);
         thread.isRunning = true;
         thread.execute();
     }
 
     public void stop() {
-        System.out.println("Stopping worker");
         if (thread != null) {
             thread.isRunning = false;
             thread.cancel(true);
@@ -136,9 +144,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
     private void calcTopoSort() {
         topoSort.clear();
         topoSort.addAll(topo.topSort(getNodes()));
-        if (thread == null) {
-            thread = new CanvasThread(topoSort);
-        }
     }
 
     private NodePresenter getClickedNode(int x, int y) {

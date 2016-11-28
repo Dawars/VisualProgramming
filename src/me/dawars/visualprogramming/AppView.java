@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 /**
  * Created by dawars on 11/24/16.
  */
-public class AppFrame extends JFrame {
+public class AppView extends JFrame {
 
     private App app;
     private final JList nodeList;
@@ -24,7 +24,7 @@ public class AppFrame extends JFrame {
     /**
      * IView
      */
-    public AppFrame(App app, CanvasPresenter canvas) {
+    public AppView(App app, CanvasPresenter canvas) {
         super("Visual Programming Editor");
 
         this.app = app;
@@ -97,33 +97,48 @@ public class AppFrame extends JFrame {
         JMenuItem eMenuItem = new JMenuItem("Exit");
         eMenuItem.setMnemonic(KeyEvent.VK_E);
         eMenuItem.setToolTipText("Exit application");
-        eMenuItem.addActionListener((ActionEvent event) -> {
-            System.exit(0);
+        eMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
         });
 
         JMenuItem sMenuItem = new JMenuItem("Save");
         sMenuItem.setMnemonic(KeyEvent.VK_S);
         sMenuItem.setToolTipText("Save current project");
-        sMenuItem.addActionListener((ActionEvent event) -> {
-            app.save(false);
+        sMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                app.save(false);
+            }
         });
         JMenuItem saMenuItem = new JMenuItem("Save as...");
         saMenuItem.setMnemonic(KeyEvent.VK_A);
         saMenuItem.setToolTipText("Save current project as ...");
-        saMenuItem.addActionListener((ActionEvent event) -> {
-            app.save(true);
+        saMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                app.save(true);
+            }
         });
         JMenuItem oMenuItem = new JMenuItem("Open");
         oMenuItem.setMnemonic(KeyEvent.VK_O);
         oMenuItem.setToolTipText("Open project");
-        oMenuItem.addActionListener((ActionEvent event) -> {
-            app.open();
+        oMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                app.open();
+            }
         });
         JMenuItem nMenuItem = new JMenuItem("New");
         nMenuItem.setMnemonic(KeyEvent.VK_N);
         nMenuItem.setToolTipText("Empty project");
-        nMenuItem.addActionListener((ActionEvent event) -> {
-            app.newProject();
+        nMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                app.newProject();
+            }
         });
 
         file.add(nMenuItem);
@@ -140,7 +155,6 @@ public class AppFrame extends JFrame {
 
     public void setLeftBottomComponent(JComponent component) {
         left_sidebar.setBottomComponent(component);
-        // TODO add table listener
     }
 
     public JTextArea getConsole() {

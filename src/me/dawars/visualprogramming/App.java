@@ -15,11 +15,10 @@ import java.util.ArrayList;
  */
 public class App implements ActionListener {
 
-    private static App instance;
-    private AppFrame view;
+    private final ColorPresenter colorComponent;
+    private AppView view;
     private static ArrayList<NodePresenter> listNode = new ArrayList<>();
     private CanvasPresenter canvas;
-    private String nodeToAdd;
 
     public static void main(String[] args) {
         System.out.println("---Dawars Visual Programming---");
@@ -38,21 +37,26 @@ public class App implements ActionListener {
             e.printStackTrace();
         }
 
-        instance = new App();
+        new App();
     }
 
     public App() {
         registerNodes();
         canvas = new CanvasPresenter();
 
-        view = new AppFrame(this, canvas);
+        view = new AppView(this, canvas);
+
+        colorComponent = new ColorPresenter(getStartNode());
+        view.setLeftBottomComponent(colorComponent.view);
+        canvas.setColorComponent(colorComponent);
     }
 
     private void registerNodes() {
-        registerNode(new StartNode());
+//        registerNode(new StartNode());
         registerNode(new ConstantNode());
-        registerNode(new CosNode());
         registerNode(new SinNode());
+        registerNode(new CosNode());
+        registerNode(new AbsNode());
         registerNode(new AddNode());
         registerNode(new MultiplyNode());
         registerNode(new TimeNode());
@@ -79,7 +83,6 @@ public class App implements ActionListener {
      */
     public void save(boolean saveAs) {
         writeToConsole("Saving project...");
-
 
         if (fileToSave != null && !saveAs) {
             saveToFile(fileToSave, canvas);
@@ -163,6 +166,7 @@ public class App implements ActionListener {
 
     public void newProject() {
         this.canvas = new CanvasPresenter();
+        canvas.setColorComponent(colorComponent);
         view.setCanvas(canvas);
         writeToConsole("New project created");
 
@@ -204,5 +208,9 @@ public class App implements ActionListener {
                 start();
                 break;
         }
+    }
+
+    public StartNode getStartNode() {
+        return (StartNode) canvas.getNodes().get(0);
     }
 }
