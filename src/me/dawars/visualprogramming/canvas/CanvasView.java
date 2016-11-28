@@ -27,8 +27,6 @@ public class CanvasView extends JComponent {
     public void paint(Graphics graphics) {
         super.paint(graphics);
 
-        System.out.println("painting CanvasView");
-
         for (NodePresenter node : presenter.getNodes()) {
             node.render((Graphics2D) graphics);
         }

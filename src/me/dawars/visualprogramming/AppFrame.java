@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  */
 public class AppFrame extends JFrame {
 
-    private final App app;
+    private App app;
     private final JList nodeList;
     private CanvasPresenter canvas;
 
@@ -45,7 +45,7 @@ public class AppFrame extends JFrame {
         addButton.addActionListener(app);
         toolBar.add(addButton);
 
-        JButton deleteButton= new JButton("Delete");
+        JButton deleteButton = new JButton("Delete");
         deleteButton.setActionCommand("DELETE");
         deleteButton.addActionListener(app);
         toolBar.add(deleteButton);
@@ -55,7 +55,11 @@ public class AppFrame extends JFrame {
         start.addActionListener(app);
         toolBar.add(start);
 
-        toolBar.add(new JButton("Stop"));
+        JButton stop = new JButton("Stop");
+        stop.setActionCommand("STOP");
+        stop.addActionListener(app);
+        toolBar.add(stop);
+
         add(toolBar, BorderLayout.NORTH);
 
         nodeList = new JList<>(new AbstractListModel<String>() {
@@ -136,7 +140,7 @@ public class AppFrame extends JFrame {
 
     public void setLeftBottomComponent(JComponent component) {
         left_sidebar.setBottomComponent(component);
-        // TODO colored pane
+        // TODO add table listener
     }
 
     public JTextArea getConsole() {

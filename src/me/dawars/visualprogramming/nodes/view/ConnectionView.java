@@ -4,11 +4,12 @@ import me.dawars.visualprogramming.nodes.Connection;
 import me.dawars.visualprogramming.nodes.NodePresenter;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Created by dawars on 11/27/16.
  */
-public class ConnectionView {
+public class ConnectionView implements Serializable {
     private final Connection conn;
 
     public ConnectionView(Connection conn) {
@@ -25,6 +26,6 @@ public class ConnectionView {
         Rectangle bb2 = node2.getBoundingBox();
         int x2 = conn.inPin.getX();
         int y2 = conn.inPin.getY();
-        g.drawLine(bb1.x + x1, bb1.y+y1, bb2.x + x2, bb2.y+y2);
+        g.drawLine(bb1.x + x1, bb1.y + y1, bb2.x + x2, bb2.y + y2);
     }
 }

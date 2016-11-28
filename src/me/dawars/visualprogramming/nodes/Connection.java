@@ -5,11 +5,12 @@ import me.dawars.visualprogramming.nodes.pins.OutputPin;
 import me.dawars.visualprogramming.nodes.view.ConnectionView;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Created by dawars on 11/14/16.
  */
-public class Connection<T> {
+public class Connection<T> implements Serializable {
     private final ConnectionView view;
     public OutputPin<T> outPin;
     public InputPin<T> inPin;

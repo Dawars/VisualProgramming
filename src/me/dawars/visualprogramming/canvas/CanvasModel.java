@@ -43,7 +43,6 @@ public class CanvasModel implements Serializable {
             removeConnection(in.connection);
         }
         //remove outpin connections from both sides
-// FIXME remove connections, iterate through connections, works for small graphs
         for (OutputPin in : node.getOutPins()) {
             List<Connection> conns = in.connections;
             for (int i = 0; i < conns.size(); i++) {

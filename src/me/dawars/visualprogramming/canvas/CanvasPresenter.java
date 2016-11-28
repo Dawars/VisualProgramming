@@ -1,6 +1,7 @@
 package me.dawars.visualprogramming.canvas;
 
 import me.dawars.visualprogramming.App;
+import me.dawars.visualprogramming.TopologicalSort;
 import me.dawars.visualprogramming.nodes.*;
 import me.dawars.visualprogramming.nodes.pins.IPin;
 import me.dawars.visualprogramming.nodes.pins.InputPin;
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -19,7 +22,6 @@ import java.util.List;
 public class CanvasPresenter implements MouseListener, MouseInputListener, Serializable {
     private final StartNode start;
     public final CanvasView view;
-    private final App app;
     private CanvasModel model;
     private NodePresenter selectedNode;
     private IPin selectedPin;
@@ -28,8 +30,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     private MouseState mouseState = MouseState.NONE;
 
-    public CanvasPresenter(App app) {
-        this.app = app;
+    public CanvasPresenter() {
         view = new CanvasView(CanvasPresenter.this);
         model = new CanvasModel();
 
@@ -60,6 +61,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
             newNode = new AddNode();
         } else if (node instanceof ConstantNode) {
             newNode = new ConstantNode();
+            ((ConstantNode) newNode).getOut().setValue(0.0);
         } else if (node instanceof CosNode) {
             newNode = new CosNode();
         } else if (node instanceof LerpNode) {
@@ -84,6 +86,9 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         return model.getConnections();
     }
 
+    Deque<NodePresenter> topoSort = new ArrayDeque<>();
+    TopologicalSort topo = new TopologicalSort();
+
     /**
      * Connect to {@link INode}s through their {@link me.dawars.visualprogramming.nodes.pins.IPin}s
      *
@@ -93,7 +98,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
      */
     public boolean connectPins(OutputPin out, InputPin in) {
         Connection connection = new Connection(out, in);
-
         // run DAG test here
 
         boolean cycle = false; // TODO: detect cycle
@@ -101,28 +105,44 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         if (!cycle) {
 
             Connection otherConn = connection.inPin.connection;
-            if(otherConn != null){
+            if (otherConn != null) {
                 model.removeConnection(otherConn);
             }
             out.connect(connection);////////////////////////////
 
             model.addConnection(connection);
+            calcTopoSort(); // update topo sort FIXME should check cycles beforehand
         }
         return cycle;
     }
 
+    private CanvasThread thread;
+
     public void run() {
-        // topological sort
+        calcTopoSort();
+        thread = new CanvasThread(topoSort);
+        thread.isRunning = true;
+        thread.execute();
+    }
 
-        for (INode node : model.getNodes()) {
-            node.execute();
+    public void stop() {
+        System.out.println("Stopping worker");
+        if (thread != null) {
+            thread.isRunning = false;
+            thread.cancel(true);
         }
+    }
 
-//        System.out.println("The result: " + start.getInput().getValue());
+    private void calcTopoSort() {
+        topoSort.clear();
+        topoSort.addAll(topo.topSort(getNodes()));
+        if (thread == null) {
+            thread = new CanvasThread(topoSort);
+        }
     }
 
     private NodePresenter getClickedNode(int x, int y) {
-        NodePresenter node = null;
+        NodePresenter node;
         for (int i = 0; i < getNodes().size(); i++) {
             node = getNodes().get(i);
             if (node.getBoundingBox().contains(x, y)) {
@@ -152,9 +172,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
         mousePt = mouseEvent.getPoint();
-
-        System.out.println("[pressed] " + x + ":" + y);
-        // TODO start drag
 
         NodePresenter node = getClickedNode(x, y);
         if (node != null) {
@@ -198,6 +215,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         mouseState = MouseState.NONE;
         view.repaint();
     }
+
     private Point mousePt;
 
 

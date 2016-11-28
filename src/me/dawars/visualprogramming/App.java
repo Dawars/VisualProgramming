@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class App implements ActionListener {
 
+    private static App instance;
     private AppFrame view;
     private static ArrayList<NodePresenter> listNode = new ArrayList<>();
     private CanvasPresenter canvas;
@@ -37,12 +38,12 @@ public class App implements ActionListener {
             e.printStackTrace();
         }
 
-        new App();
+        instance = new App();
     }
 
     public App() {
         registerNodes();
-        canvas = new CanvasPresenter(this);
+        canvas = new CanvasPresenter();
 
         view = new AppFrame(this, canvas);
     }
@@ -161,7 +162,7 @@ public class App implements ActionListener {
     }
 
     public void newProject() {
-        this.canvas = new CanvasPresenter(this);
+        this.canvas = new CanvasPresenter();
         view.setCanvas(canvas);
         writeToConsole("New project created");
 
@@ -195,6 +196,9 @@ public class App implements ActionListener {
                     writeToConsole("Removing node " + node.getName());
                     canvas.removeNode(node);
                 }
+                break;
+            case "STOP":
+                canvas.stop();
                 break;
             case "START":
                 start();

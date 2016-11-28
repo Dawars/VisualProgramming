@@ -20,9 +20,10 @@ public class StartNode extends NodePresenter {
     @Override
     public void execute() {
         System.out.print("[StartNode]");
-        System.out.println(inR.getValue());
-        System.out.println(inG.getValue());
-        System.out.println(inB.getValue());
+        System.out.println("RED: " +inR.getValue());
+
+//        System.out.println(inG.getValue());
+//        System.out.println(inB.getValue());
     }
 
 
