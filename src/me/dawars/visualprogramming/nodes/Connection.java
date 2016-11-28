@@ -23,5 +23,4 @@ public class Connection<T> {
     public void render(Graphics2D graphics) {
         view.render(graphics);
     }
-    //TODO remove other input connections from global array
 }

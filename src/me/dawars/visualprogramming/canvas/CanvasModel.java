@@ -37,25 +37,29 @@ public class CanvasModel implements Serializable {
 
     public void removeNode(NodePresenter node) {
         if (node == null || node instanceof StartNode) return;
-        synchronized (connections) {
-            for (InputPin in : node.getInPins()) {
-                removeConnection(in.connection);
-                connections.remove(in.connection);
-            }
+        // remove inpin connections
+        for (InputPin in : node.getInPins()) {
+            connections.remove(in.connection);
+            removeConnection(in.connection);
+        }
+        //remove outpin connections from both sides
 // FIXME remove connections, iterate through connections, works for small graphs
-            for (OutputPin in : node.getOutPins()) {
-                List<Connection> conns = in.connections;
-                for (Connection conn : conns) {
-//                    removeConnection(conn);
-                    connections.remove(conn);
-                }
+        for (OutputPin in : node.getOutPins()) {
+            List<Connection> conns = in.connections;
+            for (int i = 0; i < conns.size(); i++) {
+                Connection conn = conns.get(i);
+
+                removeConnection(conn);
+                connections.remove(conn);
+                i--;
             }
         }
         nodes.remove(node);
     }
 
-    private void removeConnection(Connection conn) {
+    public void removeConnection(Connection conn) {
         if (conn == null) return;
+        connections.remove(conn);
         conn.outPin.connections.remove(conn);
         conn.inPin.connection = null;
     }

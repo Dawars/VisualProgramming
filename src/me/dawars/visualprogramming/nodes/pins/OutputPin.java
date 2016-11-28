@@ -17,7 +17,7 @@ public class OutputPin<T> implements IPin {
     private T value;
     private NodePresenter node;
 
-    public List<Connection<T>> connections = Collections.synchronizedList(new ArrayList<>());
+    public List<Connection<T>> connections =new ArrayList<>();
     private String name;
     private int x;
     private int y;
@@ -35,19 +35,19 @@ public class OutputPin<T> implements IPin {
         return value;
     }
 
-    public void connectTo(InputPin<T> in) {
-        Connection<T> connection = new Connection<>(this, in);
-        breakConnection(in);
+    public void connect(Connection<T> connection) {
+        breakConnection(connection);
 
         this.connections.add(connection); // add new connection
-        in.connection = connection; // set other half of connection
+        connection.inPin.connection = connection; // set other half of connection
     }
 
-    private void breakConnection(InputPin<T> in) {
-        if (in.connection != null) {
-            in.connection.outPin.connections.remove(in.connection); // remove other half of connection
+    private void breakConnection(Connection<T> connection) {
+        if (connection != null) {
+            connection.outPin.connections.remove(connection); // remove other half of connection
+            connection.inPin.connection = null; // remove if already connected
+
         }
-        this.connections.remove(in.connection); // remove if already connected
     }
 
     public String getName() {

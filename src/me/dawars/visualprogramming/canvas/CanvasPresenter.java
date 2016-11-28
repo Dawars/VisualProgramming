@@ -100,7 +100,12 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
         if (!cycle) {
 
-            out.connectTo(in);
+            Connection otherConn = connection.inPin.connection;
+            if(otherConn != null){
+                model.removeConnection(otherConn);
+            }
+            out.connect(connection);////////////////////////////
+
             model.addConnection(connection);
         }
         return cycle;
