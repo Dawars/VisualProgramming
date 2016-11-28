@@ -14,8 +14,6 @@ public class ConstantNode extends NodePresenter {
     }
     @Override
     public void execute() {
-        System.out.print("[ConstNode]");
-        System.out.println(out.getValue());
     }
 
     public void setValue(Double value) {

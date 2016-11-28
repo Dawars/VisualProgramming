@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class App implements ActionListener {
 
-    private final ColorPresenter colorComponent;
+    private ColorPresenter colorComponent;
     private AppView view;
     private static ArrayList<NodePresenter> listNode = new ArrayList<>();
     private CanvasPresenter canvas;
@@ -52,7 +52,7 @@ public class App implements ActionListener {
     }
 
     private void registerNodes() {
-//        registerNode(new StartNode());
+//        registerNode(new RenderNode());
         registerNode(new ConstantNode());
         registerNode(new SinNode());
         registerNode(new CosNode());
@@ -168,6 +168,8 @@ public class App implements ActionListener {
         this.canvas = new CanvasPresenter();
         canvas.setColorComponent(colorComponent);
         view.setCanvas(canvas);
+        colorComponent = new ColorPresenter(getStartNode());
+        view.setLeftBottomComponent(colorComponent.view);
         writeToConsole("New project created");
 
         fileToSave = null;
@@ -210,7 +212,7 @@ public class App implements ActionListener {
         }
     }
 
-    public StartNode getStartNode() {
-        return (StartNode) canvas.getNodes().get(0);
+    public RenderNode getStartNode() {
+        return (RenderNode) canvas.getNodes().get(0);
     }
 }

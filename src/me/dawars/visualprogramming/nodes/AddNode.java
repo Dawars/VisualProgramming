@@ -19,7 +19,6 @@ public class AddNode extends NodePresenter {
 
     @Override
     public void execute() {
-        System.out.println("[AddNode]");
         out.setValue(inA.getValue() + inB.getValue());
     }
 

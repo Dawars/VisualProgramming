@@ -18,7 +18,6 @@ public class SinNode extends NodePresenter  {
 
     @Override
     public void execute() {
-        System.out.println("[SinNode]");
         double sin = Math.sin(in.getValue());
         out.setValue(sin);
     }

@@ -18,7 +18,6 @@ public class OneMinusNode extends NodePresenter {
 
     @Override
     public void execute() {
-        System.out.println("[OneMinusNode]");
         out.setValue(1 - in.getValue());
     }
 

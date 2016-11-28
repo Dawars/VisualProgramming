@@ -19,10 +19,7 @@ public class MultiplyNode extends NodePresenter {
 
     @Override
     public void execute() {
-        System.out.print("[MultiplyNode]");
         out.setValue(inA.getValue() * inB.getValue());
-
-        System.out.println(out.getValue());
     }
 
 

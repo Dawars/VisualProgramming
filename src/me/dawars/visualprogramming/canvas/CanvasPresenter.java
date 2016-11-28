@@ -7,6 +7,7 @@ import me.dawars.visualprogramming.nodes.pins.IPin;
 import me.dawars.visualprogramming.nodes.pins.InputPin;
 import me.dawars.visualprogramming.nodes.pins.OutputPin;
 
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by dawars on 11/14/16.
  */
 public class CanvasPresenter implements MouseListener, MouseInputListener, Serializable {
-    private final StartNode start;
+    private final RenderNode start;
     public final CanvasView view;
     private CanvasModel model;
     private NodePresenter selectedNode;
@@ -40,7 +41,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         model = new CanvasModel();
 
         // Start
-        start = new StartNode();
+        start = new RenderNode();
         start.setPosition(400, 100);
         addNode(start);
 
@@ -67,7 +68,18 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
             newNode = new AddNode();
         } else if (node instanceof ConstantNode) {
             newNode = new ConstantNode();
-            ((ConstantNode) newNode).getOut().setValue(0.5);
+            String s = (String) JOptionPane.showInputDialog(
+                    new JFrame(),
+                    "Type in a number:",
+                    "Set the value of the constant",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "1.0");
+            if ((s != null) && (s.length() > 0)) {
+                double num = Double.parseDouble(s);
+                ((ConstantNode) newNode).getOut().setValue(num);
+            }
         } else if (node instanceof CosNode) {
             newNode = new CosNode();
         } else if (node instanceof LerpNode) {
@@ -94,8 +106,8 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         return model.getConnections();
     }
 
-    Deque<NodePresenter> topoSort = new ArrayDeque<>();
-    TopologicalSort topo = new TopologicalSort();
+    private Deque<NodePresenter> topoSort = new ArrayDeque<>();
+    private TopologicalSort topo = new TopologicalSort();
 
     /**
      * Connect to {@link INode}s through their {@link me.dawars.visualprogramming.nodes.pins.IPin}s
@@ -104,6 +116,7 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
      * @param in  {@link InputPin} of second {@link INode}
      * @return true if connection successful (no cycle detected)
      */
+
     public boolean connectPins(OutputPin out, InputPin in) {
         Connection connection = new Connection(out, in);
         // run DAG test here
@@ -156,6 +169,24 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         }
 
         return null;
+    }
+
+    /**
+     * Deselect nodes and select only node
+     *
+     * @param node
+     */
+    private void selectNode(NodePresenter node) {
+        if (selectedNode != null) {
+            selectedNode.deselect();
+            selectedNode = null;
+        }
+
+        if (node != null) {
+            node.select();
+            selectedNode = node;
+        }
+        view.repaint();
     }
 
     @Override
@@ -223,7 +254,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     private Point mousePt;
 
-
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
         // update selection rect render,
@@ -246,25 +276,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         view.repaint();
     }
 
-
-    /**
-     * Deselect nodes and select only node
-     *
-     * @param node
-     */
-    private void selectNode(NodePresenter node) {
-        if (selectedNode != null) {
-            selectedNode.deselect();
-            selectedNode = null;
-        }
-
-        if (node != null) {
-            node.select();
-            selectedNode = node;
-        }
-        view.repaint();
-    }
-
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
     }
@@ -272,8 +283,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
     }
-
-    //TODO const node popup
 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {

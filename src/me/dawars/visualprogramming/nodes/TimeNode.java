@@ -17,9 +17,7 @@ public class TimeNode extends NodePresenter {
 
     @Override
     public void execute() {
-        System.out.print("[TimeNode]");
-        out.setValue((double) System.currentTimeMillis());
-        System.out.println(out.getValue());
+        out.setValue((double) System.currentTimeMillis()/ 1000.f);
     }
 
     @Override

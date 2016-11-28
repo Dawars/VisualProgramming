@@ -18,9 +18,7 @@ public class CosNode extends NodePresenter {
 
     @Override
     public void execute() {
-        System.out.print("[CosNode]");
         out.setValue(Math.cos(in.getValue()));
-        System.out.println(out.getValue());
     }
 
     @Override

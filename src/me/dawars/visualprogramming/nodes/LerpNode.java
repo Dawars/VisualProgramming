@@ -20,7 +20,6 @@ public class LerpNode extends NodePresenter  {
     }
     @Override
     public void execute() {
-        System.out.println("[LerpNode]");
         out.setValue((1 - inT.getValue()) * inA.getValue() + inT.getValue() * inB.getValue());
     }
 

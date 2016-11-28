@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CanvasThread extends SwingWorker<Void, Void> implements Serializable {
     private final Deque<NodePresenter> nodes;
-    private final ColorPresenter colorPresenter;
+    private volatile ColorPresenter colorPresenter;
     public volatile boolean isRunning = false;
 
     public CanvasThread(Deque<NodePresenter> topoSort, ColorPresenter colorPresenter) {
@@ -31,7 +31,7 @@ public class CanvasThread extends SwingWorker<Void, Void> implements Serializabl
                 node.execute();
             }
             publish();
-            Thread.sleep(1000 / 60);
+            Thread.sleep(1000 / 15);
         }
 
         return null;

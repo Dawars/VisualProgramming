@@ -11,16 +11,14 @@ public class AbsNode extends NodePresenter {
     private InputPin<Double> in = new InputPin<>(this, "in");
     private OutputPin<Double> out = new OutputPin<>(this, "out");
 
-    public AbsNode(){
+    public AbsNode() {
         addInPin(in);
         addOutPin(out);
     }
 
     @Override
     public void execute() {
-        System.out.print("[AbsNode]");
         out.setValue(Math.abs(in.getValue()));
-        System.out.println(out.getValue());
     }
 
     @Override
