@@ -69,3 +69,9 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program, most likely a file in the root directory, called 'LICENSE'.
 If not, see <http://www.gnu.org/licenses>.
+
+
+<!-- -->
+
+[1]: https://img.shields.io/badge/license-GNU_General_Public_License_v3.0-blue.svg
+[2]: http://www.gnu.org/licenses/gpl.html
