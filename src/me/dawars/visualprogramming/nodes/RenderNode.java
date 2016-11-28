@@ -13,6 +13,9 @@ public class RenderNode extends NodePresenter {
     private InputPin<Double> inG = new InputPin<>(this, "Green");
     private InputPin<Double> inB = new InputPin<>(this, "Blue");
 
+    /**
+     * The end node which will be displayed
+     */
     public RenderNode() {
         addInPin(inR);
         addInPin(inG);
@@ -41,6 +44,10 @@ public class RenderNode extends NodePresenter {
         return inB;
     }
 
+    /**
+     * Returns a Color object from the inputs of this node
+     * @return
+     */
     public Color getColor() {
         Double r = inR.getValue();
         Double g = inG.getValue();

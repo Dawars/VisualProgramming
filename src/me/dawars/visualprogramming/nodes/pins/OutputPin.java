@@ -35,6 +35,10 @@ public class OutputPin<T> implements IPin {
         return value;
     }
 
+    /**
+     * Connect pins together
+     * @param connection
+     */
     public void connect(Connection<T> connection) {
         breakConnection(connection);
 
@@ -42,6 +46,10 @@ public class OutputPin<T> implements IPin {
         connection.inPin.connection = connection; // set other half of connection
     }
 
+    /**
+     * Remove connection
+     * @param connection
+     */
     private void breakConnection(Connection<T> connection) {
         if (connection != null) {
             connection.outPin.connections.remove(connection); // remove other half of connection

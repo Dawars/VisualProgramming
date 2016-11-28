@@ -46,11 +46,15 @@ public class App implements ActionListener {
 
         view = new AppView(this, canvas);
 
-        colorComponent = new ColorPresenter(getStartNode());
+        colorComponent = new ColorPresenter(getRenderNode());
         view.setLeftBottomComponent(colorComponent.view);
         canvas.setColorComponent(colorComponent);
     }
 
+    /**
+     * Registering nodes so that they can be listed
+     * Will be moved to public API in the future
+     */
     private void registerNodes() {
 //        registerNode(new RenderNode());
         registerNode(new ConstantNode());
@@ -72,6 +76,11 @@ public class App implements ActionListener {
         return listNode;
     }
 
+    /**
+     * Write message to UI console
+     *
+     * @param text message
+     */
     public void writeToConsole(String text) {
         view.getConsole().append(text + "\n");
     }
@@ -80,6 +89,8 @@ public class App implements ActionListener {
 
     /**
      * Save current project
+     *
+     * @param saveAs if saved as new file
      */
     public void save(boolean saveAs) {
         writeToConsole("Saving project...");
@@ -102,6 +113,12 @@ public class App implements ActionListener {
         }
     }
 
+    /**
+     * Save object to file through serialization
+     *
+     * @param file file to save
+     * @param o    object to save
+     */
     private void saveToFile(File file, CanvasPresenter o) {
         FileOutputStream fileOutputStream = null;
         try {
@@ -164,27 +181,43 @@ public class App implements ActionListener {
         }
     }
 
+    /**
+     * Create new project, create new objects
+     */
     public void newProject() {
         this.canvas = new CanvasPresenter();
         canvas.setColorComponent(colorComponent);
         view.setCanvas(canvas);
-        colorComponent = new ColorPresenter(getStartNode());
+        colorComponent = new ColorPresenter(getRenderNode());
         view.setLeftBottomComponent(colorComponent.view);
         writeToConsole("New project created");
 
         fileToSave = null;
     }
 
+    /**
+     * Start running the node program
+     */
     public void start() {
         canvas.run();
     }
 
+    /**
+     * Get node from list to be added to the {@link CanvasPresenter}
+     *
+     * @return
+     */
     private NodePresenter getNodeToAdd() {
         int selectedIndex = view.getNodeList().getSelectedIndex();
 
         return selectedIndex == -1 ? null : listNode.get(selectedIndex);
     }
 
+    /**
+     * Handle button click events
+     *
+     * @param actionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
@@ -212,7 +245,12 @@ public class App implements ActionListener {
         }
     }
 
-    public RenderNode getStartNode() {
+    /**
+     * returns the Render Node
+     *
+     * @return RenderNode
+     */
+    public RenderNode getRenderNode() {
         return (RenderNode) canvas.getNodes().get(0);
     }
 }

@@ -23,6 +23,10 @@ public class CanvasView extends JComponent {
         addMouseMotionListener(presenter);
     }
 
+    /**
+     * Render nodes and connections
+     * @param graphics
+     */
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);

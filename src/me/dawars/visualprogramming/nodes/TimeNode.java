@@ -11,6 +11,9 @@ public class TimeNode extends NodePresenter {
 
     private OutputPin<Double> out = new OutputPin<>(this, "time");
 
+    /**
+     * Gives the current time in millis /1000
+     */
     public TimeNode() {
         addOutPin(out);
     }

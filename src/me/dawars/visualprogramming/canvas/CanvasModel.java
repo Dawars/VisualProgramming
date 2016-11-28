@@ -15,25 +15,45 @@ import java.util.List;
  */
 public class CanvasModel implements Serializable {
 
-    ArrayList<NodePresenter> nodes = new ArrayList<>();
-    ArrayList<Connection> connections = new ArrayList<>();
+    ArrayList<NodePresenter> nodes = new ArrayList<>(); // list of nodes on canvas
+    ArrayList<Connection> connections = new ArrayList<>(); // list of connections between nodes
 
+    /**
+     * Returns connections array
+     * @return
+     */
     public ArrayList<Connection> getConnections() {
         return connections;
     }
 
+    /**
+     * Return nodes array
+     * @return
+     */
     public ArrayList<NodePresenter> getNodes() {
         return nodes;
     }
 
+    /**
+     * add connection to canvas
+     * @param connection
+     */
     public void addConnection(Connection connection) {
         connections.add(connection);
     }
 
+    /**
+     * Add nodes to canvas
+     * @param node
+     */
     public void addNodes(NodePresenter node) {
         nodes.add(node);
     }
 
+    /**
+     * Remove node from canvas
+     * @param node
+     */
     public void removeNode(NodePresenter node) {
         if (node == null || node instanceof RenderNode) return;
         // remove inpin connections
@@ -55,6 +75,10 @@ public class CanvasModel implements Serializable {
         nodes.remove(node);
     }
 
+    /**
+     * Remove connection
+     * @param conn
+     */
     public void removeConnection(Connection conn) {
         if (conn == null) return;
         connections.remove(conn);

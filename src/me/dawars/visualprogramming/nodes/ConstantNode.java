@@ -9,6 +9,9 @@ public class ConstantNode extends NodePresenter {
 
     private OutputPin<Double> out = new OutputPin<>(this, "c");
 
+    /**
+     * A constant value
+     */
     public ConstantNode(){
         addOutPin(out);
     }

@@ -16,6 +16,9 @@ public class CosNode extends NodePresenter {
         addOutPin(out);
     }
 
+    /**
+     * Calculates the cos of the input
+     */
     @Override
     public void execute() {
         out.setValue(Math.cos(in.getValue()));

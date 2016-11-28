@@ -11,6 +11,9 @@ public class SinNode extends NodePresenter  {
     private InputPin<Double> in = new InputPin<>(this, "in");
     private OutputPin<Double> out = new OutputPin<>(this, "out");
 
+    /**
+     * Calculates the sin of a
+     */
     public SinNode(){
         addInPin(in);
         addOutPin(out);

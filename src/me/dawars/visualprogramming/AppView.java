@@ -87,6 +87,9 @@ public class AppView extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Creates menu bar and options
+     */
     private void createMenuBar() {
 
         JMenuBar menubar = new JMenuBar();
@@ -153,19 +156,35 @@ public class AppView extends JFrame {
 
     }
 
+    /**
+     * Setter function for the left bottom panel
+     * @param component
+     */
     public void setLeftBottomComponent(JComponent component) {
         left_sidebar.setBottomComponent(component);
     }
 
+    /**
+     * Gives the console panel
+     * @return
+     */
     public JTextArea getConsole() {
         return console;
     }
 
+    /**
+     * Sets the canvas, useful for creating new Project
+     * @param canvas
+     */
     public void setCanvas(CanvasPresenter canvas) {
         this.canvas = canvas;
         right_side.setTopComponent(canvas.view);
     }
 
+    /**
+     * Returns the list of nodes
+     * @return
+     */
     public JList getNodeList() {
         return nodeList;
     }

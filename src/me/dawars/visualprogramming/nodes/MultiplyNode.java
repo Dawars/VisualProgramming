@@ -11,6 +11,9 @@ public class MultiplyNode extends NodePresenter {
     private InputPin<Double> inB = new InputPin<>(this, "b");
     private OutputPin<Double> out = new OutputPin<>(this, "out");
 
+    /**
+     * Multiply a and b
+     */
     public MultiplyNode(){
         addInPin(inA);
         addInPin(inB);

@@ -11,6 +11,9 @@ public class AddNode extends NodePresenter {
     private InputPin<Double> inB = new InputPin<>(this, "b");
     private OutputPin<Double> out = new OutputPin<>(this, "c");
 
+    /**
+     * Add a and b inputs
+     */
     public AddNode() {
         addInPin(inA);
         addInPin(inB);

@@ -16,6 +16,10 @@ public class ColorView extends JPanel implements Serializable{
         setMinimumSize(new Dimension(100, 100));
     }
 
+    /**
+     * Paint a colored square with the color from {@link me.dawars.visualprogramming.nodes.RenderNode}
+     * @param graphics
+     */
     @Override
     public void paint(Graphics graphics) {
         Color color = presenter.getColor();

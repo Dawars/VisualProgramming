@@ -11,6 +11,9 @@ public class OneMinusNode extends NodePresenter {
     private InputPin<Double> in = new InputPin<>(this, "in");
     private OutputPin<Double> out = new OutputPin<>(this, "out");
 
+    /**
+     * Gives 1 - a
+     */
     public OneMinusNode() {
         addInPin(in);
         addOutPin(out);

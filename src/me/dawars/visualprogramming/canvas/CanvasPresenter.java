@@ -47,21 +47,39 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     }
 
+    /**
+     * Add node to canvas at (x, y)
+     * @param node node to add
+     * @param x coord
+     * @param y coord
+     */
     public void addNode(NodePresenter node, int x, int y) {
         node.setPosition(x, y);
         model.addNodes(node);
         view.repaint();
     }
 
+    /**
+     * Add node without adding to Canvas
+     * @param node
+     */
     public void addNode(NodePresenter node) {
         model.addNodes(node);
     }
 
+    /**
+     * Remove node with its connections
+     * @param node
+     */
     public void removeNode(NodePresenter node) {
         model.removeNode(node);
         view.repaint();
     }
 
+    /**
+     * Create new node from the given node instance
+     * @param node
+     */
     public void addNodeInstance(NodePresenter node) {
         NodePresenter newNode = null;
         if (node instanceof AddNode) {
@@ -139,6 +157,9 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     private CanvasThread thread;
 
+    /**
+     * Starts running the Node program thread
+     */
     public void run() {
         calcTopoSort();
         stop();
@@ -147,6 +168,9 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         thread.execute();
     }
 
+    /**
+     * Stops running the program thread
+     */
     public void stop() {
         if (thread != null) {
             thread.isRunning = false;
@@ -154,11 +178,20 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         }
     }
 
+    /**
+     * Recalculates the order of execution for Nodes
+     */
     private void calcTopoSort() {
         topoSort.clear();
         topoSort.addAll(topo.topSort(getNodes()));
     }
 
+    /**
+     * Calculates the node at x, y returns null when no node is at that location
+     * @param x coord
+     * @param y coord
+     * @return node
+     */
     private NodePresenter getClickedNode(int x, int y) {
         NodePresenter node;
         for (int i = 0; i < getNodes().size(); i++) {
@@ -167,7 +200,6 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
                 return node;
             }
         }
-
         return null;
     }
 
@@ -189,6 +221,10 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         view.repaint();
     }
 
+    /**
+     * Select node
+     * @param mouseEvent
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         int x = mouseEvent.getX();
@@ -202,6 +238,10 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
         selectNode(node);
     }
 
+    /**
+     * Initiates the moving of a node or new connection
+     * @param mouseEvent
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
 
@@ -223,6 +263,10 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     }
 
+    /**
+     * Creates the actional connection
+     * @param mouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         switch (mouseState) {
@@ -254,6 +298,10 @@ public class CanvasPresenter implements MouseListener, MouseInputListener, Seria
 
     private Point mousePt;
 
+    /**
+     * Handle moving nodes and creating connection
+     * @param mouseEvent
+     */
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
         // update selection rect render,

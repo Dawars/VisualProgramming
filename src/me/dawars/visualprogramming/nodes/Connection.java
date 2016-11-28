@@ -21,6 +21,10 @@ public class Connection<T> implements Serializable {
         inPin = in;
     }
 
+    /**
+     * Render a connection from pin to pin
+     * @param graphics
+     */
     public void render(Graphics2D graphics) {
         view.render(graphics);
     }

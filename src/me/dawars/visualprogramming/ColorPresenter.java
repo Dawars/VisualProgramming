@@ -17,10 +17,17 @@ public class ColorPresenter implements Serializable {
         this.node = node;
     }
 
+    /**
+     * Gives color to be displayed
+     * @return color
+     */
     public Color getColor() {
         return node.getColor();
     }
 
+    /**
+     * Repaint {@link ColorView}
+     */
     public void repaint() {
         view.repaint();
     }

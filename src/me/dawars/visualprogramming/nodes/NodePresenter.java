@@ -25,38 +25,77 @@ public abstract class NodePresenter implements INode, Serializable {
         view = new NodeView(this);
     }
 
+    /**
+     * Set the position of NodeView
+     * @param x
+     * @param y
+     */
     public void setPosition(int x, int y) {
         view.setPosition(x, y);
     }
 
+    /**
+     * Gives the name of the node
+     * @return name
+     */
     public abstract String getName();
 
+    /**
+     * Renders the node
+     * @param graphics
+     */
     public void render(Graphics2D graphics) {
         view.render(graphics);
     }
 
+    /**
+     * Returns the list of OutputPins
+     * @return output pins
+     */
     public ArrayList<OutputPin> getOutPins() {
         return outPins;
     }
 
+    /**
+     * Returns the list of InputPins
+     * @return input pins
+     */
     public ArrayList<InputPin> getInPins() {
         return inPins;
     }
 
+    /**
+     * Register inPin
+     * @param inputPin
+     */
     protected void addInPin(InputPin<Double> inputPin) {
         inputPin.calcPosition(inPins.size());
         inPins.add(inputPin);
     }
 
+    /**
+     * Register outPin
+     * @param outputPin
+     */
     protected void addOutPin(OutputPin<Double> outputPin) {
         outputPin.calcPosition(outPins.size());
         outPins.add(outputPin);
     }
 
+    /**
+     * Get BoundingBox of node
+     * @return
+     */
     public Rectangle getBoundingBox() {
         return view.getBoundingBox();
     }
 
+    /**
+     * Handle click event at x, y
+     * @param x coord
+     * @param y coord
+     * @return clicked pin
+     */
     public IPin click(int x, int y) {
         for (int i = 0; i < getInPins().size(); i++) {
             InputPin pin = getInPins().get(i);
@@ -77,14 +116,23 @@ public abstract class NodePresenter implements INode, Serializable {
         return null;
     }
 
+    /**
+     * Deselect node
+     */
     public void deselect() {
         isSelected = false;
     }
 
+    /**
+     * Select node
+     */
     public void select() {
         isSelected = true;
     }
 
+    /**
+     * @return if node is selected
+     */
     public boolean isSelected() {
         return isSelected;
     }

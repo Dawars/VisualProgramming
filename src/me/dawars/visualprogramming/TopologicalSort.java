@@ -14,6 +14,11 @@ public class TopologicalSort implements Serializable{
     Deque<NodePresenter> stack = new ArrayDeque<>();
     Set<NodePresenter> visited = new HashSet<>();
 
+    /**
+     * Topological sort on {@link NodePresenter}s and {@link Connection}s
+     * @param nodes
+     * @return
+     */
     public Deque<NodePresenter> topSort(List<NodePresenter> nodes) {
         visited.clear();
         stack.clear();
@@ -29,6 +34,10 @@ public class TopologicalSort implements Serializable{
         return stack;
     }
 
+    /**
+     * Recursive utility function for Topological Sort
+     * @param vertex
+     */
     private void topSortUtil(NodePresenter vertex) {
         visited.add(vertex);
         for (OutputPin outputPin : vertex.getOutPins()) {
